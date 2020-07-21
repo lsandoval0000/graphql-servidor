@@ -1,6 +1,21 @@
 import fs from "fs";
-import path from "path";
+import { mergeSchemas } from "graphql-tools";
+import { makeExecutableSchema } from "apollo-server-express";
+import resolvers from "./resolvers";
 
-const typeDefs = fs.readFileSync("data/schema.graphql", "utf8").toString();
+// Cargando Schemas
+const clientesSchema = makeExecutableSchema({
+    typeDefs:fs.readFileSync("./data/schemas/clientesSchema.graphql", "utf8").toString()
+});
 
-export {typeDefs};
+const productosSchema = makeExecutableSchema({
+    typeDefs:fs.readFileSync("./data/schemas/productosSchema.graphql", "utf8").toString()
+});
+
+// Uniendo Schemas y resolvers
+const schema = mergeSchemas({
+    schemas : [clientesSchema,productosSchema],
+    resolvers: resolvers
+});
+
+export default schema;

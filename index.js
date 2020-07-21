@@ -1,15 +1,14 @@
 import express from 'express';
 import {ApolloServer, makeExecutableSchema} from 'apollo-server-express';
-import {typeDefs} from './data/schema';
-import {resolvers} from './data/resolvers';
+import schema from './data/schema';
 
 const app = express();
-
+/*
 const schema = makeExecutableSchema({
     typeDefs:typeDefs,
     resolvers:resolvers
 });
-
+*/
 const server = new ApolloServer({schema:schema});
 
 server.applyMiddleware({app});
